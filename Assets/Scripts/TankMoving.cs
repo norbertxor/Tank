@@ -12,26 +12,17 @@ public class TankMoving : MonoBehaviour {
     private float _direction = 1;
     
     
-    void OnGUI() {
-        //Press this button to lock the Cursor
-        if (GUI.Button(new Rect(0, 0, 100, 50), "Lock Cursor"))
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
+    
         
-        
-    }
+    
 
     private void Start() {
         _rb = GetComponent<Rigidbody>();
-        Cursor.lockState = CursorLockMode.Locked;
+        
     }
 
     private void Update() {
-        
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Cursor.lockState = CursorLockMode.None;
-        
+
         //Ограничиваем скорость движения вперед
         if (Input.GetAxis("Vertical") > 0 && _rb.velocity.magnitude < 7) {
             _rb.AddRelativeForce(Vector3.forward * speed);
@@ -62,9 +53,6 @@ public class TankMoving : MonoBehaviour {
 
         //поворачиваем танк
         _rb.MoveRotation(currentAngle);
-
-        //после поворта танка обнуляем значение 
-
     }
 
 }
