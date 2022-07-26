@@ -16,7 +16,6 @@ public class TankShooting : MonoBehaviour {
     private float _reloadTimer = 0;
 
     void OnGUI() {
-        //Кнопка лочить курсор
         if (GUI.Button(new Rect(10, 10, 100, 50), "Lock Cursor")) {
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -30,17 +29,12 @@ public class TankShooting : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape))
             Cursor.lockState = CursorLockMode.None;
-        
-        //таймер и отображения прогресса перезарядки
         _reloadTimer = Mathf.Clamp(_reloadTimer - Time.deltaTime, 0f, 5f);
         if(_reloadTimer > 0)
             reloadAnimation.SetActive(true);
         else 
             reloadAnimation.SetActive(false);
-
-        //стреляем
         if (Input.GetMouseButtonDown(0) && _reloadTimer == 0) {
-            //получаем направление выстрела, делаем отдачу в противоположном выстрелу направлении, обнуляем таймер перезардки
             Vector3 direction = transform.forward - firePlace.up * 10;
             direction.y /= 8;
             _rb.AddForce(direction * -1 * shootRecoilForce, ForceMode.Impulse);
@@ -49,8 +43,7 @@ public class TankShooting : MonoBehaviour {
             _reloadTimer = 3f;
             Debug.Log(direction);
         }
-
-        //рисуем прицел 
+       //прицел
         RaycastHit hit;
         Ray ray = new Ray(firePlace.position - new Vector3(0,1f,0), firePlace.up*-1);
         if (Physics.Raycast(ray, out hit, 100f)) {

@@ -19,16 +19,10 @@ public class MouseLook : MonoBehaviour{
     private float _rotationX = 0;
 
     private void Update() {
-        
-        
-        //реализация плавного поворота башни вслед за камерой и движение ствольного орудия
-        if (axes == RotationAxes.MouseX) {         
-            //получаем вектор направления
+        if (axes == RotationAxes.MouseX) {  
             Vector3 targetPoint = camera.transform.position + camera.transform.forward * 500; 
             Vector3 direction = transform.position - targetPoint;
-            //следим за камерой
             Quaternion deltaAngle = Quaternion.LookRotation( transform.forward,direction);
-            //плавно вращаем башню танка
             transform.rotation = Quaternion.RotateTowards(transform.rotation, deltaAngle, TowerRotateSpeed * Time.deltaTime);
         } else if (axes == RotationAxes.MouseY) { 
             _rotationX -= Input.GetAxis("Mouse Y") * sensivityVer;
